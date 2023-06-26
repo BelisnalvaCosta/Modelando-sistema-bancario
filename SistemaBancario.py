@@ -1,17 +1,17 @@
 import textwrap
 
 def menu():
-   menu = """\n
+    menu = """\n
    ======================== MENU ===================
-[ D ]\tDepositar
-[ S ]\tSaque
-[ E ]\tExtrato
-[ NC ]\tNova conta
-[ LC ]\tListar contas
-[ NU ]\tNovo usuário
-[ Q ]\tSair
+[d ]\tDepositar
+[s ]\tSaque
+[e ]\tExtrato
+[nc]\tNova conta
+[lc]\tListar contas
+[nu]\tNovo usuário
+[q ]\tSair
 => """
-   return input(textwrap.dedent(menu))
+    return input(textwrap.dedent(menu))
 
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
@@ -22,7 +22,7 @@ def depositar(saldo, valor, extrato, /):
         print("\n@@@ Operação falhou! o valor informado é inválido. @@@")
         return saldo, extrato
 
-    def saque(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
+def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
         excedeu_saldo = valor > saldo
         excedeu_limite = valor > limite
         excedeu_saques = numero_saques >= limite_saques
@@ -63,7 +63,7 @@ def criar_usuario(usuarios):
     data_nascimento = input("Informe a data de nascimento(dd-mm-aaaa): ")
     endereco = input("Informe o endereço(logadouro, número - bairro - cidade/sigra estado): ")
 
-    usuario.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
+    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
     print("=== Usuário criado com sucesso! ===")
 
 def filtrar_usuario(cpf, usuarios):
@@ -71,26 +71,18 @@ def filtrar_usuario(cpf, usuarios):
     return usuarios_filtrados[0] if usuarios_filtrados else None
 
 def criar_conta(agencia, numero_conta, usuarios):
-    agencia = input("Informe o código e o nome da agência: ")
-    numero_conta = input("Informe o número da conta: ")
-    usuario = input("Informe o nome do usuário e CPF: ")
+    cpf = input("Informe o CPF do usuário: ")
+    usuario = filtrar_usuario(cpf, usuarios)
 
-    if agencia:
-        print("\n@@@ Agência existente, informe o código corrreto!. @@@")
-        return
+    if usuario:
+        print("\n=== Conta criada com sucesso!. ===")
+        return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
 
-    nome_agencia = input("Informe o nome da agência: ")
-    data_abertura = input("Informe a data da abertura da conta(dd-mm-aaaa): ")
-    endereco = input("Informe o endereço da agência(logadouro, número - bairro - cidade/sigra estado): ")
-    print("=== Agência e conta criado com sucesso! ===")
-
-    agencia.append({"nome_agencia": nome_agencia, "data_abertura": data_abertura, "endereço": endereco})
-    return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
     print("\n@@@ Agencia e usuário não encontrado, fluxo de criação de conta encerrada ou inexistente! @@@")
 
 def listar_contas(contas):
     for conta in contas:
-        linha = f"""\
+        linha = f"""
             Agência:\t{conta['agencia']}
             C/C:\t\t{conta['numero_conta']}
             Titular:\t{conta['usuario']['nome']}
@@ -111,14 +103,13 @@ def main():
 
     while True:
         opcao = menu()
-
-        if opcao == "D":
+        if opcao == "d":
             valor = float(input("Informe o valor do deposito: R$ "))
             saldo, extrato = depositar(saldo, valor, extrato)
 
-        elif opcao == "S":
+        elif opcao == "s":
             valor = float(input("Informe o valor do saque: R$ "))
-            saldo, extrato = saque(
+            saldo, extrato = sacar(
                 saldo=saldo,
                 valor=valor,
                 extrato=extrato,
@@ -127,26 +118,26 @@ def main():
                 limite_saques=LIMITE_SAQUES,
             )
 
-        elif opcao == "E":
+        elif opcao == "e":
             exibir_extrato(saldo, extrato=extrato)
 
-        elif opcao == "NU":
+        elif opcao == "nu":
             criar_usuario(usuarios)
 
-        elif opcao == "NC":
+        elif opcao == "nc":
             numero_conta = len(contas) + 1
             conta = criar_conta(AGENCIA, numero_conta, usuarios)
 
         if conta:
             contas.append(conta)
 
-        elif opcao == "LC":
+        elif opcao == "lc":
             listar_contas(contas)
 
-        elif opcao == "Q":
+        elif opcao == "q":
             break
-
         else:
             print("Operação inválida, por favor digite outra opção válida.")
             print("Volte sempre e conte com os nossos serviços!")
+
 main()
