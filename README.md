@@ -7,9 +7,8 @@ Este projeto foi feito na IDE Pycharm, na linguagem Python, com a orientação d
 
 ## _*Implamentação em produção*_
 . Back-end
-. Banco de dados Mysql
 
-Detalhes com o link [(Vou acrescentar depois)]( https://github.com/)
+. Banco de dados Mysql
 
 # _*Como executar o projeto*_
 
@@ -17,14 +16,15 @@ Detalhes com o link [(Vou acrescentar depois)]( https://github.com/)
 Pré-requisitos: Python 3.10
 
 ## Instalar ou importar biblioteca
-import mysql
-import random
-import getpass
+1 - import textwrap
+2 - import mysql
+3 - import random
+4 - import getpass
 
 -[ ] Done! :🚀👩‍💻 (:tada:)
 
 >"Tudo é possível ao que crê! Tenha esperança!"
 ><!-- Minhas palavras -->
 
-[^1]: Este projeto foi feito com a orientação do Expert e professor Guilherme Carvalho[^1]
+[^1]: Este projeto foi feito com a orientação do Expert e professor Guilherme Carvalho.
 
