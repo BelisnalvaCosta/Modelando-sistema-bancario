@@ -54,5 +54,3 @@ def depositar(self, cpf, conta, conta2,cpf2, valor):
 def exibir_saldo():
 
 def exibir_extrato():
-
-def main():
